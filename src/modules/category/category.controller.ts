@@ -19,14 +19,15 @@ import { UpdateCategoryDto as U } from './dto/update-category.dto';
 import { Paginate } from '@/decorators/paginate.decorator';
 import { Category } from '@/entities/category.entity';
 
-@UseGuards(RoleGuard)
-@UseGuards(AuthGuard('jwt'))
+// @UseGuards(RoleGuard)
+// @UseGuards(AuthGuard('jwt'))
 @Controller('admin/categories')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
 
   @Post()
   async create(@Body() createCategoryDto: C): Promise<Category> {
+    console.log(createCategoryDto);
     return await this.categoryService.create(createCategoryDto);
   }
 

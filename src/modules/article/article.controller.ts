@@ -18,6 +18,7 @@ import { IQueryResult } from '@/interfaces/paginate.interface';
 import { IObject } from '@/interfaces/response.interface';
 import { Paginate } from '@/decorators/paginate.decorator';
 import { Article } from '@/entities/article.entity';
+import { ApiBody } from '@nestjs/swagger';
 
 @UseGuards(RoleGuard)
 @UseGuards(AuthGuard('jwt'))
@@ -30,6 +31,7 @@ export class ArticleController {
     return await this.articleService.create(createArticleDto);
   }
 
+  @ApiBody({ type: [Q] })
   @Post('list')
   findAll(
     @Paginate() queryArticleDto: Q

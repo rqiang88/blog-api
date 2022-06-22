@@ -6,3 +6,5 @@ dist/
 tmp/
 temp/
 logs/
+.env
+docker-compose.yml

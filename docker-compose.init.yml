@@ -1,0 +1,30 @@
+version: '3'
+services:
+  mysql:
+    image: mysql/mysql-server
+    networks:
+      - back
+    container_name: mysql
+    restart: always
+    environment:
+      - "MYSQL_ROOT_PASSWORD=Rxq@123456"
+    ports:
+      - "3306:3306"
+    volumes:
+      - /Users/rqiang/workspace/data:/var/lib/mysql
+  web:
+    build: .
+    container_name: blog
+    networks:
+      - back
+    depends_on:
+      - mysql
+    ports:
+      - "8086:8086"
+    links:
+      - mysql
+    volumes:
+      - /Users/rqiang/workspace/rqiang/blog-api/.env:/blog-api/.env
+    command: yarn dev
+networks:
+  back:

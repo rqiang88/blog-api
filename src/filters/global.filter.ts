@@ -5,7 +5,7 @@ import {
   HttpStatus
 } from '@nestjs/common';
 
-export class GlobleException implements ExceptionFilter {
+export class GlobalException implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
     const response = host.switchToHttp().getResponse();
     const code =
