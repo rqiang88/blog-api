@@ -7,11 +7,11 @@ services:
     container_name: mysql
     restart: always
     environment:
-      - "MYSQL_ROOT_PASSWORD=Rxq@123456"
+      - "MYSQL_ROOT_PASSWORD=123456"
     ports:
       - "3306:3306"
     volumes:
-      - /Users/rqiang/workspace/data:/var/lib/mysql
+      - /my/data:/var/lib/mysql
   web:
     build: .
     container_name: blog
@@ -24,7 +24,7 @@ services:
     links:
       - mysql
     volumes:
-      - /Users/rqiang/workspace/rqiang/blog-api/.env:/blog-api/.env
+      - /my/.env:/blog-api/.env
     command: yarn dev
 networks:
   back:
