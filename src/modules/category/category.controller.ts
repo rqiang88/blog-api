@@ -18,9 +18,11 @@ import { CreateCategoryDto as C } from './dto/create-category.dto';
 import { UpdateCategoryDto as U } from './dto/update-category.dto';
 import { Paginate } from '@/decorators/paginate.decorator';
 import { Category } from '@/entities/category.entity';
+import { ApiHeader } from '@nestjs/swagger';
 
-// @UseGuards(RoleGuard)
-// @UseGuards(AuthGuard('jwt'))
+@ApiHeader({ name: 'token', description: 'auth' })
+@UseGuards(RoleGuard)
+@UseGuards(AuthGuard('jwt'))
 @Controller('admin/categories')
 export class CategoryController {
   constructor(private readonly categoryService: CategoryService) {}
