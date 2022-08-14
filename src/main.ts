@@ -3,6 +3,7 @@ import { AppModule } from '@/modules/app.module';
 import { GlobalException } from '@/filters/global.filter';
 import { ResponseInterceptor } from '@/injectables/interceptors/response.interceptor';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+// import cluster from 'cluster'; 集群
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,10 +15,9 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('v1', app, document);
-
   app.enableCors();
   app.useGlobalFilters(new GlobalException());
   app.useGlobalInterceptors(new ResponseInterceptor());
-  await app.listen(8086);
+  await app.listen(8088);
 }
 bootstrap();

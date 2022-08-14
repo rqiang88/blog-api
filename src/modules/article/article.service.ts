@@ -2,12 +2,11 @@ import { IObject } from '@/interfaces/response.interface';
 import { IQueryResult } from '@/interfaces/paginate.interface';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, Transaction } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateArticleDto as C } from './dto/create-article.dto';
 import { UpdateArticleDto as U } from './dto/update-article.dto';
 import { QueryArticleDto as Q } from './dto/query-article.dto';
 import { Article } from '@/entities/article.entity';
-
 @Injectable()
 export class ArticleService {
   constructor(
@@ -15,7 +14,6 @@ export class ArticleService {
     private readonly repository: Repository<Article>
   ) {}
 
-  @Transaction()
   async create(createArticleDto: C): Promise<Article> {
     const entity = await this.repository.create(createArticleDto);
     return await this.repository.save(entity);

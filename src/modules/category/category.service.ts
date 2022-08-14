@@ -7,7 +7,6 @@ import { CreateCategoryDto as C } from './dto/create-category.dto';
 import { UpdateCategoryDto as U } from './dto/update-category.dto';
 import { QueryCategoryDto as Q } from './dto/query-category.dto';
 import { IObject } from '@/interfaces/response.interface';
-
 @Injectable()
 export class CategoryService {
   constructor(
