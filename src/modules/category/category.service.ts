@@ -1,3 +1,4 @@
+import { RedisServer } from './../redis/redis.service';
 import { IQueryResult } from '@/interfaces/paginate.interface';
 import { Category } from '@/entities/category.entity';
 import { Injectable } from '@nestjs/common';
@@ -11,7 +12,8 @@ import { IObject } from '@/interfaces/response.interface';
 export class CategoryService {
   constructor(
     @InjectRepository(Category)
-    private readonly repository: Repository<Category>
+    private readonly repository: Repository<Category>,
+    private readonly redisServer: RedisServer
   ) {}
 
   async create(createCategoryDto: C): Promise<Category> {
@@ -20,10 +22,11 @@ export class CategoryService {
   }
 
   async findAll(queryCategoryDto: Q): Promise<Partial<IQueryResult<Category>>> {
+    console.log(this.redisServer.getItem());
     const { page, skip, take, limit, name } = queryCategoryDto;
-    let repository = this.repository.createQueryBuilder('category');
+    const repository = this.repository.createQueryBuilder('category');
     if (!!name) {
-      repository = repository.where('name like :name', {
+      repository.where('name like :name', {
         name: `%${name}%`
       });
     }

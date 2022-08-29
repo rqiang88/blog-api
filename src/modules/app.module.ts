@@ -1,3 +1,4 @@
+import { RedisModule } from './redis/redis.module';
 import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -17,6 +18,12 @@ import { ConfigService } from './config/config.service';
     TypeOrmModule.forRootAsync({
       useFactory: (configService: ConfigService) => {
         return configService.dbConfig;
+      },
+      inject: [ConfigService]
+    }),
+    RedisModule.register({
+      useFactory: async (configService: ConfigService) => {
+        return configService;
       },
       inject: [ConfigService]
     }),

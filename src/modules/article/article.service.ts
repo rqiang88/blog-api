@@ -13,7 +13,6 @@ export class ArticleService {
     @InjectRepository(Article)
     private readonly repository: Repository<Article>
   ) {}
-
   async create(createArticleDto: C): Promise<Article> {
     const entity = await this.repository.create(createArticleDto);
     return await this.repository.save(entity);
@@ -21,16 +20,16 @@ export class ArticleService {
 
   async findAll(queryArticleDto: Q): Promise<Partial<IQueryResult<Article>>> {
     const { page, skip, take, limit, title, categoryId } = queryArticleDto;
-    let repository = this.repository.createQueryBuilder('article');
+    const repository = this.repository.createQueryBuilder('article');
 
     if (!!categoryId) {
-      repository = repository.where('category_id = :categoryId', {
+      repository.where('category_id = :categoryId', {
         categoryId
       });
     }
 
     if (!!title) {
-      repository = repository.where('title like :title', { title });
+      repository.where('title like :title', { title });
     }
 
     const total = await repository.getCount();

@@ -18,6 +18,9 @@ async function bootstrap() {
   app.enableCors();
   app.useGlobalFilters(new GlobalException());
   app.useGlobalInterceptors(new ResponseInterceptor());
+  process.on('uncaughtException', (err: any) => {
+    console.log(err);
+  });
   await app.listen(8088);
 }
 bootstrap();
