@@ -16,15 +16,11 @@ import configuration from './config/configuration';
       load: [configuration]
     }),
     TypeOrmModule.forRootAsync({
-      useFactory: (configService: ConfigService) => {
-        return configService.get('db');
-      },
+      useFactory: (configService: ConfigService) => configService.get('db'),
       inject: [ConfigService]
     }),
     RedisModule.register({
-      useFactory: async (configService: ConfigService) => {
-        return configService;
-      },
+      useFactory: async (configService: ConfigService) => configService,
       inject: [ConfigService]
     }),
     CategoryModule,
