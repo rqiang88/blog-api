@@ -8,7 +8,7 @@ export default () => ({
     database: process.env.DB_DATABASE,
     synchronize: true,
     logging: false,
-    entities: ['dist/entities/**/*.js'],
+    entities: [process.env.DB_ENTITIES],
     migrations: ['dist/migrations/**/*.js'],
     subscribers: ['src/subscribers/**/*.ts'],
     cli: {

@@ -1,13 +1,13 @@
-import { RedisModule } from './redis/redis.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ArticleModule } from '@/modules/article/article.module';
 import { CategoryModule } from '@/modules/category/category.module';
 import { UserModule } from '@/modules/user/user.module';
-import { AuthModule } from './auth/auth.module';
-import { MessageModule } from './message/message.module';
-import configuration from './config/configuration';
+import { AuthModule } from '@/modules/auth/auth.module';
+import { MessageModule } from '@/modules/message/message.module';
+import configuration from '@/modules/config/configuration';
+import { RedisModule } from '@/modules/redis/redis.module';
 
 @Module({
   imports: [

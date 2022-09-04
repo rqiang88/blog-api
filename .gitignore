@@ -7,4 +7,5 @@ tmp/
 temp/
 logs/
 .env
+.env.test
 docker-compose.yml
