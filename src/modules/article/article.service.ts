@@ -13,6 +13,7 @@ export class ArticleService {
     @InjectRepository(Article)
     private readonly repository: Repository<Article>
   ) {}
+
   async create(createArticleDto: C): Promise<Article> {
     const entity = await this.repository.create(createArticleDto);
     return await this.repository.save(entity);

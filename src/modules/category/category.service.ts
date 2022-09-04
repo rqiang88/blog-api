@@ -12,8 +12,7 @@ import { IObject } from '@/interfaces/response.interface';
 export class CategoryService {
   constructor(
     @InjectRepository(Category)
-    private readonly repository: Repository<Category>,
-    private readonly redisServer: RedisServer
+    private readonly repository: Repository<Category>
   ) {}
 
   async create(createCategoryDto: C): Promise<Category> {
@@ -22,7 +21,6 @@ export class CategoryService {
   }
 
   async findAll(queryCategoryDto: Q): Promise<Partial<IQueryResult<Category>>> {
-    console.log(this.redisServer.getItem());
     const { page, skip, take, limit, name } = queryCategoryDto;
     const repository = this.repository.createQueryBuilder('category');
     if (!!name) {
