@@ -1,3 +1,4 @@
+import { Category } from '@/entities/category.entity';
 import { CategoryModule } from '@/modules/category/category.module';
 import { QueryArticleDto } from './dto/query-article.dto';
 import { ArticleModule } from '@/modules/article/article.module';
@@ -8,9 +9,13 @@ import { ArticleService } from './article.service';
 import configuration from '@/modules/config/configuration';
 import { getConnection } from 'typeorm';
 import { CategoryService } from '../category/category.service';
+import { Article } from '@/entities/article.entity';
 
 describe('ArticleService', () => {
   let service: ArticleService;
+  let category: Category;
+  let article: Article;
+
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [
@@ -34,11 +39,11 @@ describe('ArticleService', () => {
 
     // generate default data
     const categoryService = moduleRef.get<CategoryService>(CategoryService);
-    const category = await categoryService.create({
-      name: 'test',
+    category = await categoryService.create({
+      name: 'test-1',
       state: 'active'
     });
-    await service.create({
+    article = await service.create({
       categoryId: category.id,
       title: 'article',
       content: 'article'
@@ -53,6 +58,25 @@ describe('ArticleService', () => {
     const query = { limit: 20, page: 1 };
     const result = await service.findAll(query as QueryArticleDto);
     expect(result.data.length).toBe(1);
+  });
+
+  it('findOne', async () => {
+    expect(await service.findOne(article.id)).toBeInstanceOf(Article);
+  });
+
+  it('create', async () => {
+    const data = { categoryId: category.id, title: 'hello', content: 'hello' };
+    expect(await service.create(data)).toBeInstanceOf(Article);
+  });
+
+  it('update', async () => {
+    const data = { content: 'update' };
+    expect(await service.update(article.id, data)).toBeInstanceOf(Article);
+  });
+
+  it('remove', async () => {
+    const data = await service.remove(article.id);
+    expect(data.message).toBe('success');
   });
 
   afterAll(async () => {

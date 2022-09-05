@@ -1,4 +1,3 @@
-import { RedisServer } from './../redis/redis.service';
 import { IQueryResult } from '@/interfaces/paginate.interface';
 import { Category } from '@/entities/category.entity';
 import { Injectable } from '@nestjs/common';

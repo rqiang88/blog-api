@@ -6,7 +6,7 @@ import { Validate } from '@/decorators/validate.decorator';
 
 @Entity('categories')
 export class Category extends BaseEntity {
-  @Column({ nullable: true, unique: true })
+  @Column({ nullable: true })
   state: string;
 
   @IsNotEmpty()

@@ -14,7 +14,7 @@ import { Category } from './category.entity';
 @Unique(['categoryId', 'title'])
 @Entity('articles')
 export class Article extends BaseEntity {
-  @Column({ name: 'category_id' })
+  @Column({ name: 'category_id', nullable: true })
   categoryId: number;
 
   @Column({ nullable: true })
@@ -28,7 +28,9 @@ export class Article extends BaseEntity {
   @Column({ nullable: true, type: 'text' })
   content: string;
 
-  @ManyToOne(() => Category, category => category.articles)
+  @ManyToOne(() => Category, category => category.articles, {
+    onDelete: 'SET NULL'
+  })
   @JoinColumn({ name: 'category_id' })
   category: Category;
 
