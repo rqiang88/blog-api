@@ -6,7 +6,9 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards
+  UseGuards,
+  UseInterceptors,
+  ClassSerializerInterceptor
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto as C } from './dto/create-user.dto';
@@ -17,9 +19,11 @@ import { IQueryResult } from '@/interfaces/paginate.interface';
 import { IObject } from '@/interfaces/response.interface';
 import { RoleGuard } from '@/injectables/guards/role.guard';
 import { AuthGuard } from '@nestjs/passport';
+import { Paginate } from '@/decorators/paginate.decorator';
 
-@UseGuards(RoleGuard)
-@UseGuards(AuthGuard('jwt'))
+// @UseGuards(RoleGuard)
+// @UseGuards(AuthGuard('jwt'))
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('admin/users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -30,7 +34,9 @@ export class UserController {
   }
 
   @Post('list')
-  async findAll(queryUserDto: Q): Promise<Partial<IQueryResult<User>>> {
+  async findAll(
+    @Paginate() queryUserDto: Q
+  ): Promise<Partial<IQueryResult<User>>> {
     return await this.userService.findAll(queryUserDto);
   }
 

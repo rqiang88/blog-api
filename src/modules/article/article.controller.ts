@@ -7,7 +7,9 @@ import {
   Patch,
   Param,
   Delete,
-  UseGuards
+  UseGuards,
+  UseInterceptors,
+  UploadedFile
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ArticleService } from './article.service';
@@ -19,7 +21,7 @@ import { IObject } from '@/interfaces/response.interface';
 import { Paginate } from '@/decorators/paginate.decorator';
 import { Article } from '@/entities/article.entity';
 import { ApiBody } from '@nestjs/swagger';
-
+import { FileInterceptor } from '@nestjs/platform-express';
 @UseGuards(RoleGuard)
 @UseGuards(AuthGuard('jwt'))
 @Controller('admin/articles')
@@ -27,7 +29,12 @@ export class ArticleController {
   constructor(private readonly articleService: ArticleService) {}
 
   @Post()
-  async create(@Body() createArticleDto: C): Promise<Article> {
+  @UseInterceptors(FileInterceptor('avatar'))
+  async create(
+    @Body() createArticleDto: C,
+    @UploadedFile() avatar: Express.Multer.File
+  ): Promise<Article> {
+    Object.assign(createArticleDto, { avatar });
     return await this.articleService.create(createArticleDto);
   }
 

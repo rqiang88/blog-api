@@ -22,9 +22,9 @@ export class UserService {
 
   async findAll(queryUserDto: Q): Promise<Partial<IQueryResult<User>>> {
     const { page, skip, take, limit, state } = queryUserDto;
-    let repository = this.repository.createQueryBuilder('user');
+    const repository = this.repository.createQueryBuilder('user');
     if (!!state) {
-      repository = repository.where('state = :state', { state });
+      repository.where('state = :state', { state });
     }
     const total = await repository.getCount();
     const data = await repository

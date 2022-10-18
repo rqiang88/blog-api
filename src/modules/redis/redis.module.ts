@@ -1,7 +1,7 @@
-import { RedisServer } from './redis.service';
-import { DynamicModule, Global, Module } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { RedisService } from './redis.service';
+import { DynamicModule, Module } from '@nestjs/common';
 
-@Global()
 @Module({})
 export class RedisModule {
   static register(options): DynamicModule {
@@ -12,14 +12,16 @@ export class RedisModule {
         inject: options.inject
       },
       {
-        provide: RedisServer,
-        useFactory: () => {
-          return new RedisServer();
+        provide: RedisService,
+        useFactory: (configService: ConfigService) => {
+          console.log(configService);
+          return new RedisService();
         },
         inject: ['RedisModuleOptions']
       }
     ];
     return {
+      global: true,
       module: RedisModule,
       providers,
       exports: providers

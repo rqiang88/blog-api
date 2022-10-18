@@ -24,6 +24,9 @@ export class Article extends BaseEntity {
   @Column({ nullable: true })
   title: string;
 
+  @Column({ nullable: true, type: 'json' })
+  avatar: object;
+
   @IsNotEmpty()
   @Column({ nullable: true, type: 'text' })
   content: string;

@@ -5,6 +5,8 @@ export class Common {
   @ApiProperty()
   readonly content: string;
   @ApiProperty()
+  readonly avatar: object;
+  @ApiProperty()
   readonly state: string;
   @ApiProperty()
   readonly categoryId: number;

@@ -8,7 +8,6 @@ import { AuthModule } from '@/modules/auth/auth.module';
 import { MessageModule } from '@/modules/message/message.module';
 import configuration from '@/modules/config/configuration';
 import { RedisModule } from '@/modules/redis/redis.module';
-
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -29,7 +28,6 @@ import { RedisModule } from '@/modules/redis/redis.module';
     AuthModule,
     MessageModule
   ],
-  controllers: [],
   providers: []
 })
 export class AppModule {}
